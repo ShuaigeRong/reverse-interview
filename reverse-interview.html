@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse Interview — Practice asking the right questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0e;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --text2: #8a8680;
+    --text3: #555250;
+    --accent: #c8f060;
+    --accent-dim: rgba(200,240,96,0.12);
+    --accent-border: rgba(200,240,96,0.3);
+    --red: #ff6b6b;
+    --red-dim: rgba(255,107,107,0.1);
+    --amber: #f0b060;
+    --amber-dim: rgba(240,176,96,0.1);
+    --blue: #60b0f0;
+    --blue-dim: rgba(96,176,240,0.1);
+    --serif: 'DM Serif Display', serif;
+    --sans: 'Instrument Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --r: 10px;
+    --r-lg: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* --- LANDING --- */
+  #landing {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #landing::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .landing-inner {
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 8vw, 62px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .landing-sub {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .setup-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+    text-align: left;
+  }
+
+  .field-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .field-group:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+
+  .field-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 10px 14px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555250' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  select:focus { outline: none; border-color: var(--accent-border); }
+  select option { background: #1e1e1e; }
+
+  .btn-launch {
+    width: 100%;
+    background: var(--accent);
+    color: #0e0e0e;
+    border: none;
+    border-radius: var(--r);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-launch:hover { opacity: 0.88; }
+  .btn-launch:active { transform: scale(0.99); }
+
+  .source-note {
+    margin-top: 1.25rem;
+    font-size: 12px;
+    color: var(--text3);
+    text-align: center;
+  }
+
+  .source-note a {
+    color: var(--text2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 1px;
+  }
+
+  .source-note a:hover { color: var(--text); }
+
+  /* --- APP SHELL --- */
+  #app { display: none; height: 100vh; flex-direction: column; }
+
+  /* Top nav */
+  .topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .nav-brand {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-brand span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  .btn-restart {
+    background: none;
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 12px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-restart:hover { border-color: var(--border2); color: var(--text); }
+
+  /* Main layout */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 280px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Left sidebar — categories */
+  .sidebar-left {
+    border-right: 1px solid var(--border);
+    padding: 1rem 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 0 1rem;
+    margin-bottom: 6px;
+    margin-top: 4px;
+  }
+
+  .cat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 7px 1rem;
+    cursor: pointer;
+    text-align: left;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .cat-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+
+  .cat-btn.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .cat-count {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  .cat-btn.active .cat-count { color: var(--accent); opacity: 0.6; }
+
+  /* Center — chat */
+  .chat-col {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  .msg-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: fadeUp 0.25s ease both;
+  }
+
+  .msg-wrap.user { align-items: flex-end; }
+  .msg-wrap.ai { align-items: flex-start; }
+
+  .msg-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  .bubble {
+    max-width: 80%;
+    padding: 11px 15px;
+    border-radius: var(--r);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .ai .bubble {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    border-radius: 2px var(--r) var(--r) var(--r);
+  }
+
+  .user .bubble {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    color: var(--text);
+    border-radius: var(--r) 2px var(--r) var(--r);
+  }
+
+  .typing-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 2px var(--r) var(--r) var(--r);
+    padding: 12px 16px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 6px; height: 6px;
+    background: var(--text3);
+    border-radius: 50%;
+    animation: blink 1.2s infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.3; transform: scale(0.85); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Input bar */
+  .input-bar {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .input-inner {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--r);
+    padding: 8px 8px 8px 14px;
+    transition: border-color 0.15s;
+  }
+
+  .input-inner:focus-within { border-color: var(--accent-border); }
+
+  textarea {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    resize: none;
+    line-height: 1.5;
+    min-height: 22px;
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 3px 0;
+  }
+
+  textarea:focus { outline: none; }
+  textarea::placeholder { color: var(--text3); }
+
+  .send-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 7px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  .send-btn:hover { opacity: 0.85; }
+  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .send-btn svg { width: 15px; height: 15px; }
+
+  /* Right sidebar — questions */
+  .sidebar-right {
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sidebar-right-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .sidebar-right-header h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 2px;
+  }
+
+  .sidebar-right-header p {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .questions-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .questions-list::-webkit-scrollbar { width: 3px; }
+  .questions-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .q-item {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--r);
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+
+  .q-item:hover {
+    background: var(--surface);
+    border-color: var(--border2);
+    color: var(--text);
+  }
+
+  .q-item.used {
+    color: var(--text3);
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  /* Coaching panel (replaces right sidebar after first response) */
+  .coaching-panel {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .coaching-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .coaching-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text2);
+  }
+
+  .strength-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .strength-excellent, .strength-good {
+    background: rgba(200,240,96,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(200,240,96,0.25);
+  }
+
+  .strength-average {
+    background: var(--amber-dim);
+    color: var(--amber);
+    border: 1px solid rgba(240,176,96,0.25);
+  }
+
+  .strength-weak {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid rgba(255,107,107,0.25);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  .stat-val {
+    color: var(--text2);
+    font-weight: 500;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+    .sidebar-left { display: none; }
+    .sidebar-right { max-height: 200px; border-left: none; border-top: 1px solid var(--border); }
+    .main-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="landing">
+  <div class="landing-inner">
+    <div class="eyebrow">Reverse Interview</div>
+    <h1>Ask better<br><em>questions.</em></h1>
+    <p class="landing-sub">Practice asking the right questions at the end of your tech interview. AI plays the hiring manager — you evaluate the company.</p>
+    <div class="setup-card">
+      <div class="field-group">
+        <label class="field-label">Your role</label>
+        <select id="sel-role">
+          <option>Software Engineer (Backend)</option>
+          <option>Software Engineer (Frontend)</option>
+          <option>Senior Software Engineer</option>
+          <option>Staff / Principal Engineer</option>
+          <option>Engineering Manager</option>
+          <option>Product Manager</option>
+          <option>Data Engineer</option>
+          <option>DevOps / Platform Engineer</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Interview stage</label>
+        <select id="sel-stage">
+          <option>Final round with hiring manager</option>
+          <option>Mid-process with team lead</option>
+          <option>First round with recruiter</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Company type</label>
+        <select id="sel-company">
+          <option>Large tech corporation (Google, Meta, Amazon scale)</option>
+          <option>High-growth tech startup (Series B/C)</option>
+          <option>Mid-size product company (500–2000 employees)</option>
+          <option>Enterprise software company</option>
+          <option>Consulting / agency</option>
+        </select>
+      </div>
+      <button class="btn-launch" onclick="launchApp()">Start practice session</button>
+    </div>
+    <p class="source-note">Questions sourced from <a href="https://github.com/viraptor/reverse-interview" target="_blank">viraptor/reverse-interview</a> — open source under CC BY-SA 4.0</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topnav">
+    <div class="nav-brand">
+      Reverse Interview <span>LIVE</span>
+    </div>
+    <div class="nav-right">
+      <span class="nav-role" id="nav-context"></span>
+      <button class="btn-restart" onclick="restart()">New session</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <!-- Left: Categories -->
+    <div class="sidebar-left">
+      <div class="sidebar-section-label">Categories</div>
+      <div id="cat-list"></div>
+    </div>
+
+    <!-- Center: Chat -->
+    <div class="chat-col">
+      <div class="stats-bar" id="stats-bar">
+        <div class="stat">Questions asked: <span class="stat-val" id="stat-asked">0</span></div>
+        <div class="stat">Session: <span class="stat-val" id="stat-session">0 min</span></div>
+      </div>
+      <div class="chat-messages" id="chat"></div>
+      <div class="input-bar">
+        <div class="input-inner">
+          <textarea id="inp" placeholder="Ask your question…" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMsg()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Questions + Coaching -->
+    <div class="sidebar-right">
+      <div class="sidebar-right-header">
+        <h3 id="right-cat-label">Questions</h3>
+        <p id="right-cat-sub">Click any question to use it</p>
+      </div>
+      <div class="questions-list" id="q-list"></div>
+      <div class="coaching-panel" id="coaching" style="display:none">
+        <div class="coaching-label">Last coaching note</div>
+        <div class="coaching-text" id="coaching-text"></div>
+        <div id="strength-badge"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QB = {
+  "The role": [
+    "What does a typical day or week look like in this role?",
+    "What are the tasks I would do on a usual day?",
+    "Are there any specific goals set for me?",
+    "What's the junior/senior balance of the team?",
+    "What does the onboarding look like?",
+    "How much freedom do individual developers have for decision making?",
+    "What are the expected core work hours?",
+    "What is your definition of success for this role?",
+    "What do you expect me to accomplish in the first 1 month / 3 months?",
+    "How will you evaluate my performance at the end of the trial period?",
+    "Do you have any concerns about my application?",
+    "What management style does my immediate manager have?",
+    "How can I develop in my new role — what opportunities are offered?",
+    "Tell me about who I would be working most closely with."
+  ],
+  "Tech": [
+    "What are the usual tech stacks used at the company?",
+    "How do you use source control?",
+    "How do you test code?",
+    "How do you track bugs?",
+    "How do you integrate and deploy changes — is it CI/CD?",
+    "Is your infrastructure setup under version control?",
+    "What's the workflow from planning to finished task?",
+    "How do you prepare for disaster recovery?",
+    "How quickly can you set up a new local test environment?",
+    "How quickly can you respond to security issues in code or dependencies?",
+    "Do you employ static code analysis?",
+    "Do you track and discuss architectural decisions?",
+    "Do you know which parts of your codebase are hotspots?",
+    "Do you have developer documentation? Separate docs for customers?",
+    "Do you track code complexity metrics?"
+  ],
+  "Team": [
+    "How is the work organised?",
+    "How does intra/inter-team communication typically work?",
+    "How are differences of opinion resolved?",
+    "Who sets the priorities and schedule?",
+    "What happens when the team misses a release target?",
+    "What kind of meetings happen every week?",
+    "Would there be a regular 1-on-1 with my manager?",
+    "What happens after production incidents — is there a blameless analysis culture?",
+    "What are some ongoing challenges the team is experiencing?",
+    "How do you balance technical vs business goals?",
+    "How do you share knowledge across the team?",
+    "How big is each team?",
+    "Walk me through a typical sprint on this team.",
+    "How are services and projects delegated to each team?"
+  ],
+  "Future colleagues": [
+    "Who do developers tend to learn from here?",
+    "What do you like best about working here?",
+    "What do you like least?",
+    "What would you change if you could?",
+    "How long has the longest team member been here?",
+    "Have there been experiences of conflicting personalities, and how were they handled?"
+  ],
+  "Company": [
+    "Why is the company hiring for this role?",
+    "Is there a conference or travel budget?",
+    "What is the promotion process like?",
+    "Is there a separate tech and management career path?",
+    "Are there company-wide resources for learning — ebooks, online courses?",
+    "Is there a budget for certifications?",
+    "Can I contribute to open-source projects? Are approvals needed?",
+    "Are there non-compete or NDA agreements I'll be asked to sign?",
+    "Where do you see the company in the next 5 to 10 years?",
+    "When did you last notice someone growing here, and in what way?",
+    "What does success look like here and how is it measured?",
+    "What is the company's stance on diverse hiring?",
+    "Are there internal hackathons?"
+  ],
+  "Conflict": [
+    "How are differences of opinion resolved?",
+    "What happens after pushback — 'this can't be done in the projected time'?",
+    "What happens when the team is under pressure and overcommits?",
+    "If someone identifies areas of improvement in process or tech, what happens?",
+    "When there is a gap between management expectations and engineer performance, what happens?",
+    "Could you tell me about a toxic situation and how the company dealt with it?"
+  ],
+  "Business": [
+    "Are you profitable?",
+    "Where does the funding come from, and who influences the high-level direction?",
+    "How do you make money?",
+    "What's preventing you from making more money?",
+    "What is the company's growth plan for the next year? Five years?",
+    "What are the big challenges you see coming up?",
+    "What have you identified as your competitive advantage?"
+  ],
+  "Remote work": [
+    "What's the ratio of remote to office workers?",
+    "Does the company provide hardware and what's the refresh schedule?",
+    "Are extra accessories or furniture purchasable through the company?",
+    "Is there a co-working space or internet budget?",
+    "How often are office visits expected?",
+    "Are meeting rooms always prepared for video conferences?"
+  ],
+  "Compensation": [
+    "If you have a bonus scheme, how are bonuses determined?",
+    "What have been the typical bonus percentages over the past few years?",
+    "Do you have a retirement plan? Does the company match contributions?",
+    "Are there medical benefits and when do they start?",
+    "Do you pay for relocation?"
+  ],
+  "Time off": [
+    "How much paid time off is offered?",
+    "Are sick time and vacation time separate or from the same pool?",
+    "What is the parental leave policy?",
+    "What is the policy on unpaid leave?",
+    "What is the sabbatical leave policy?",
+    "What is the roll-over policy for unused PTO?"
+  ]
+};
+
+const CATS = Object.keys(QB);
+let activeCat = CATS[0];
+let history = [];
+let role = '', stage = '', company = '';
+let asked = 0;
+let usedQs = new Set();
+let sessionStart = null;
+let timerInterval = null;
+
+function launchApp() {
+  role = document.getElementById('sel-role').value;
+  stage = document.getElementById('sel-stage').value;
+  company = document.getElementById('sel-company').value;
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  document.getElementById('nav-context').textContent = role.toUpperCase();
+  sessionStart = Date.now();
+  timerInterval = setInterval(updateTimer, 10000);
+  buildCatList();
+  renderQuestions(activeCat);
+  const greeting = `Hi — glad you made it to this stage. I'm the hiring manager for the ${role} position. We're in the ${stage.toLowerCase()}. I've reviewed your background and you've had a strong run through the process. Please, go ahead — I'd love to answer any questions you have about the role, the team, or the company.`;
+  addMsg('ai', greeting);
+}
+
+function updateTimer() {
+  const mins = Math.floor((Date.now() - sessionStart) / 60000);
+  document.getElementById('stat-session').textContent = mins + ' min';
+}
+
+function restart() {
+  clearInterval(timerInterval);
+  history = []; asked = 0; usedQs.clear(); activeCat = CATS[0];
+  document.getElementById('chat').innerHTML = '';
+  document.getElementById('coaching').style.display = 'none';
+  document.getElementById('stat-asked').textContent = '0';
+  document.getElementById('stat-session').textContent = '0 min';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+}
+
+function buildCatList() {
+  const el = document.getElementById('cat-list');
+  el.innerHTML = '';
+  CATS.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cat-btn' + (c === activeCat ? ' active' : '');
+    b.id = 'cat-' + c;
+    b.innerHTML = `<span>${c}</span><span class="cat-count">${QB[c].length}</span>`;
+    b.onclick = () => { activeCat = c; buildCatList(); renderQuestions(c); };
+    el.appendChild(b);
+  });
+}
+
+function renderQuestions(cat) {
+  document.getElementById('right-cat-label').textContent = cat;
+  document.getElementById('right-cat-sub').textContent = QB[cat].length + ' questions';
+  const el = document.getElementById('q-list');
+  el.innerHTML = '';
+  QB[cat].forEach(q => {
+    const b = document.createElement('button');
+    b.className = 'q-item' + (usedQs.has(q) ? ' used' : '');
+    b.textContent = q;
+    b.onclick = () => {
+      if (!usedQs.has(q)) {
+        document.getElementById('inp').value = q;
+        document.getElementById('inp').focus();
+        autoResize(document.getElementById('inp'));
+      }
+    };
+    el.appendChild(b);
+  });
+}
+
+function addMsg(who, text) {
+  const chat = document.getElementById('chat');
+  const d = document.createElement('div');
+  d.className = 'msg-wrap ' + who;
+  d.innerHTML = `<div class="msg-label">${who === 'ai' ? 'Hiring manager' : 'You'}</div><div class="bubble"></div>`;
+  d.querySelector('.bubble').textContent = text;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function showTyping() {
+  const chat = document.getElementById('chat');
+  const d = document.createElement('div');
+  d.className = 'msg-wrap ai'; d.id = 'typing-wrap';
+  d.innerHTML = `<div class="msg-label">Hiring manager</div><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-wrap');
+  if (el) el.remove();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+async function sendMsg() {
+  const inp = document.getElementById('inp');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  inp.style.height = 'auto';
+  document.getElementById('send-btn').disabled = true;
+
+  usedQs.add(text);
+  asked++;
+  document.getElementById('stat-asked').textContent = asked;
+  renderQuestions(activeCat);
+  addMsg('user', text);
+  history.push({ role: 'user', content: text });
+  showTyping();
+
+  const sys = `You are a hiring manager at: ${company}. You are in the "${stage}" for a "${role}" position.
+
+Persona rules:
+- Be candid and realistic, not a corporate brochure
+- Give specific grounded answers: real team sizes, tools (Jira, GitHub, Slack, PagerDuty, Datadog, etc.), quarterly cycles
+- Be honest about trade-offs — every company has genuine strengths AND challenges
+- Occasionally ask a natural follow-up question back to the candidate
+- Keep your total answer under 150 words
+
+After your answer, on a new line write exactly:
+COACHING: [1 sentence on what signal this question gives the interviewer, and whether it's smart to ask]
+STRENGTH: [exactly one of: Excellent / Good / Average / Weak]`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: sys,
+        messages: history
+      })
+    });
+    const data = await res.json();
+    const full = data.content.map(b => b.text || '').join('');
+    history.push({ role: 'assistant', content: full });
+    removeTyping();
+
+    const cMatch = full.match(/COACHING:\s*(.+)/);
+    const sMatch = full.match(/STRENGTH:\s*(.+)/);
+    const mainText = full.replace(/\nCOACHING:.*$/s, '').trim();
+
+    addMsg('ai', mainText);
+
+    if (cMatch) {
+      const coaching = cMatch[1].trim();
+      const strength = sMatch ? sMatch[1].trim() : '';
+      const cls = 'strength-' + strength.toLowerCase();
+      document.getElementById('coaching-text').textContent = coaching;
+      document.getElementById('strength-badge').innerHTML = strength ? `<span class="strength-badge ${cls}">${strength}</span>` : '';
+      document.getElementById('coaching').style.display = 'block';
+    }
+  } catch(e) {
+    removeTyping();
+    addMsg('ai', 'Something went wrong — please try again.');
+  }
+
+  document.getElementById('send-btn').disabled = false;
+  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+}
+</script>
+</body>
+</html>
